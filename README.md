@@ -1,0 +1,2 @@
+- set up the project
+- creating express server
