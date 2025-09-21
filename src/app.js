@@ -1,16 +1,20 @@
 const express=require('express');
 const app=express();
-//request handlers
-app.use("/hello",(req,res)=>{
-    res.send("Hello World from the /hello route");
-});
-app.use("/test",(req,res)=>{
-    res.send("Hello World from the /test route");
-});
-app.use("/",(req,res)=>{
-    res.send("Hello World from the server");
-});
+
+
+app.use("/user",[(req,res,next)=>{
+    console.log("Router handler 1");
+     next();
+    //  res.send("Response from Router handler1");
+},
+(req,res)=>{
+    console.log("Router handler 2");
+   res.send("Response from Router handler 2");
+},
+(req,res)=>{
+    console.log("Router handler 3");
+   res.send("Response from Router handler 3");
+}]);
 app.listen(7000,()=>{
     console.log("server started at 7000");
-    //listening on port 7000
 });
