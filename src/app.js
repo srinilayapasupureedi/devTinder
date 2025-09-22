@@ -1,36 +1,33 @@
 const express=require('express');
+const connectDB=require('./config/database');
+const User=require('./models/user');
 const app=express();
+app.post('/signup',async(req,res)=>{
+     const user=new User({
+        firstName:"srinilaya",
+        lastName:"pasupureddi",
+        email:"srinilaya@gmail.com",
+        password:"password123",
+        age:25,
+        gender:"female"
+     });
+     try{
+         await user.save();
+        res.send("user added to db sucessfully")
+     }
+     catch(err){
+         res.status(500).send("Error in saving user to db");
 
-//error handling
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        console.log(err)
-    res.status(500).send("something went wrong");
-    }
+     }
 });
-app.get("/test",(req,res)=>{
-    throw new Error("this is test error");
-    res.send("test api");
-});
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        console.log(err)
-    res.status(500).send("something went wrong");
-    }
-});
-
-const {adminauth, userauth}=require("./middleWare/auth");
-app.use("/admin",adminauth);
-app.get("/admin/getAllData",(req,res)=>{
-    res.send("all data is here");
-});
-app.use("/user",userauth,(req,res)=>{
-    res.send("user data is here");
-})
-app.get("/admin/deleteAllData",(req,res)=>{
-    res.send("all data is deleted");
-});
-
-app.listen(7000,()=>{
+connectDB()
+.then(()=>{
+    console.log("DB connected");
+    app.listen(7000,()=>{
     console.log("server started at 7000");
+});
+
+})
+.catch((err)=>{
+    console.log("DB connection failed",err);
 });

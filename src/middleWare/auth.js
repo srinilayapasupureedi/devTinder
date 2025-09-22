@@ -10,7 +10,7 @@ const adminauth=(req,res,next)=>{
 };
 const userauth=(req,res,next)=>{
    console.log("user auth is called");
-   const token="acbc";
+   const token="abc";
    const isauthorized=(token==="abc");
     if(isauthorized){
        next();
