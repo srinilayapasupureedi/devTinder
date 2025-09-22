@@ -8,4 +8,14 @@ const adminauth=(req,res,next)=>{
        res.status(403).send("Unauthorized");
    }
 };
-module.exports={adminauth};
+const userauth=(req,res,next)=>{
+   console.log("user auth is called");
+   const token="acbc";
+   const isauthorized=(token==="abc");
+    if(isauthorized){
+       next();
+    }else{
+       res.status(403).send("Unauthorized");
+   }
+};
+module.exports={adminauth,userauth};
