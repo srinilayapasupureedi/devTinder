@@ -2,15 +2,9 @@ const express=require('express');
 const connectDB=require('./config/database');
 const User=require('./models/user');
 const app=express();
+app.use(express.json()); // middleware to parse json body
 app.post('/signup',async(req,res)=>{
-     const user=new User({
-        firstName:"srinilaya",
-        lastName:"pasupureddi",
-        email:"srinilaya@gmail.com",
-        password:"password123",
-        age:25,
-        gender:"female"
-     });
+     const user=new User(req.body);
      try{
          await user.save();
         res.send("user added to db sucessfully")
