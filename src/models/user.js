@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 const userSchema=new mongoose.Schema({
     firstName:{
       type:String,
       required:true,
-      minlength:3,
-      maxlength:30,
+     
       
     },
     lastName:{
       type:String,
       required:true,
-      minlength:3,
-      maxlength:30,
+     
 
     },
     email:{
@@ -19,12 +18,21 @@ const userSchema=new mongoose.Schema({
       type:String,
       required:true,
       lowercase:true,
-      minlength:5,
-      maxlength:100,
+    
+      validate(value){
+        if(!validator.isEmail(value)){
+            throw new Error("Invalid email");
+        } 
+    },
     },
     password:{
       type:String,
       required:true,
+      validate(value){
+         if(!validator.isStrongPassword(value)){
+             throw new Error("Weak password");
+         }
+      }
     },
     age:{
       type:Number,
@@ -33,7 +41,6 @@ const userSchema=new mongoose.Schema({
     },
     gender:{
       type:String,
-      required:true,
       validate(value){
          if(!["male","female","other"].includes(value)){  
             throw new Error("Invalid gender");
