@@ -21,12 +21,6 @@ const userSchema=new mongoose.Schema({
       lowercase:true,
       minlength:5,
       maxlength:100,
-      validate(value){
-        const emailRegex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        if(!emailRegex.test(value)){
-          throw new Error("Invalid email");
-        }
-      }
     },
     password:{
       type:String,
@@ -41,8 +35,8 @@ const userSchema=new mongoose.Schema({
       type:String,
       required:true,
       validate(value){
-        if(!["male","female","other"].includes(value)){
-          throw new Error("Invalid gender");
+         if(!["male","female","other"].includes(value)){  
+            throw new Error("Invalid gender");
         }
       },
     },
