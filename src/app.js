@@ -1,8 +1,28 @@
 const express=require('express');
 const connectDB=require('./config/database');
 const User=require('./models/user');
+const bcrypt=require('bcrypt');
+const {validateSignupData}=require('./utilis/validate');
 const app=express();
 app.use(express.json()); // middleware to parse json body
+app.post('/login',async(req,res)=>{
+    const {email,password}=req.body;
+    try{
+        const user=await User.findOne({email});
+        if(!user){
+            throw new Error("Invalid credentials");
+        }
+        const isValidPassword=await bcrypt.compare(password,user.password);
+        if(!isValidPassword){
+            throw new Error("Invalid credentials");
+        }
+        res.send("Login successful");
+    }
+    catch(err){
+        res.status(401).send(err.message);
+    }
+});
+
 app.patch('/user/:id',async(req,res)=>{
     const userId=req.params.id; 
     const data=req.body;
@@ -46,7 +66,7 @@ app.delete('/user',async(req,res)=>{
 app.get('/user',async(req,res)=>{
     console.log(req.body.email);
     try{
-        const users=await User.findOne({email:req.body.email});
+        const users=await User.find({email:req.body.email});
         if(users.length==0){
              res.status(404).send("No user found");
         }
@@ -77,15 +97,26 @@ app.get('/feed',async(req,res)=>{
     }
 });
 app.post('/signup',async(req,res)=>{
-     const user=new User(req.body);
-     try{
+    
+    try{
+        validateSignupData(req);
+        //Lets encrypt the password before saving
+        const {firstName,lastName,email,password}=req.body;
+        const  passwordHash=await bcrypt.hash(password,10);
+        const user=new User({
+            firstName,
+            lastName,
+            email,
+            password:passwordHash
+    });
          await user.save();
         res.send("user added to db sucessfully")
-     }
-     catch(err){
-         res.status(500).send("Error in saving user to db");
-
-     }
+    }
+    catch(err){
+        return res.status(400).send(err.message);
+    }
+        
+    
 });
 connectDB()
 .then(()=>{

@@ -50,6 +50,14 @@ const userSchema=new mongoose.Schema({
     about:{
       type:String,
       default:"this is the default about section",
+    },
+    skills:{
+      type:[String],
+      default:[],
+    },
+    profileImage:{
+      type:String,
+      default:"https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-260nw-1725655669.jpg",
     }
 },{timestamps:true});
 module.exports=mongoose.model("User",userSchema);
