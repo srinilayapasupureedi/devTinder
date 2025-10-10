@@ -30,11 +30,7 @@ const userSchema=new mongoose.Schema({
     password:{
       type:String,
       required:true,
-      validate(value){
-         if(!validator.isStrongPassword(value)){
-             throw new Error("Weak password");
-         }
-      }
+      // Password is stored as a bcrypt hash. Strength is validated before creating the user.
     },
     age:{
       type:Number,
@@ -63,9 +59,9 @@ const userSchema=new mongoose.Schema({
     }
 },{timestamps:true});
 userSchema.methods.getJWTToken=function(){
-  
-    const token= jwt.sign({_id:this._id},'mysecretkey',{expiresIn:'7d'});
-    return token;
+  const secret = process.env.JWT_SECRET || 'mysecretkey';
+  const token= jwt.sign({_id:this._id}, secret, {expiresIn:'7d'});
+  return token;
 };
 userSchema.methods.validatePassword=function(PasswordInputByUser){
     const user=this;

@@ -14,4 +14,24 @@ const validateSignupData=(req)=>{
       throw new Error('Password is not strong enough');
     }
 }
-module.exports={validateSignupData};
+const validateEditProfileData=(req)=>{
+    const allowedFields=[
+      "firstName",
+      "lastName",
+      "age",
+      "gender",
+      "skills",
+      "about"
+    ];
+    const isEditAllowed=Object.keys(req.body).every((field)=>
+    allowedFields.includes(field));
+  return isEditAllowed;
+}
+const validateEditPassWord=(req)=>{
+  if (!req.body) return false;
+  const allowedFields=["password"];
+  const isAllowedEdit=Object.keys(req.body).every((key)=>
+  allowedFields.includes(key));
+  return isAllowedEdit;
+}
+module.exports={validateSignupData,validateEditProfileData,validateEditPassWord};
