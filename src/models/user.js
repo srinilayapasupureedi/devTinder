@@ -6,8 +6,6 @@ const userSchema=new mongoose.Schema({
     firstName:{
       type:String,
       required:true,
-     
-      
     },
     lastName:{
       type:String,
@@ -70,3 +68,4 @@ userSchema.methods.validatePassword=function(PasswordInputByUser){
 
 }
 module.exports=mongoose.model("User",userSchema);
+//User is the name of the model

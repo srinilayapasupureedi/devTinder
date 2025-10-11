@@ -8,9 +8,11 @@ app.use(cookieParser()); // parse cookies for all routes
 const authRouter=require('./Routes/auth');
 const profileRouter=require('./Routes/profile');
 const userRouter=require('./Routes/user');
+const requestRouter=require('./Routes/request');
 app.use('/',userRouter);
 app.use('/',profileRouter);
 app.use('/',authRouter);
+app.use('/',requestRouter);
 connectDB()
 .then(()=>{
     console.log("DB connected");
