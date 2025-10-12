@@ -1,11 +1,14 @@
 const mongoose=require("mongoose");
+const User=require('./user');
 const connectionRequestSchema=new mongoose.Schema(
   {
     fromUserId:{
       type:mongoose.Schema.Types.ObjectId,
+      ref:User,
     },
     toUserId:{
       type:mongoose.Schema.Types.ObjectId,
+      ref:User,
     },
     status:{
       type:String,
@@ -20,7 +23,7 @@ const connectionRequestSchema=new mongoose.Schema(
     timestamps:true,
   }
 );
-connectionRequestSchema.pre("save",function(){
+connectionRequestSchema.pre("save",function(next){
   const connectionRequest=this;
   if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
     throw new Error("cannont send connection request to yourself");
