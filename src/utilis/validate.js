@@ -21,10 +21,13 @@ const validateEditProfileData=(req)=>{
       "age",
       "gender",
       "skills",
-      "about"
+      "about",
+      "profileImage",
     ];
     const isEditAllowed=Object.keys(req.body).every((field)=>
     allowedFields.includes(field));
+     if (req.body.age && typeof req.body.age !== "number") return false;
+    if (req.body.skills && !Array.isArray(req.body.skills)) return false;
   return isEditAllowed;
 }
 const validateEditPassWord=(req)=>{

@@ -3,6 +3,9 @@ const {userauth}=require('../middleWare/auth');
 const bcrypt = require('bcrypt');
 const {validateEditProfileData,validateEditPassWord}=require('../utilis/validate');
 const profileRouter=express.Router();
+
+
+
 profileRouter.get('/profile/view',userauth,async(req,res)=>{
     try{
         const user=req.user;
@@ -15,7 +18,7 @@ profileRouter.get('/profile/view',userauth,async(req,res)=>{
         res.status(401).send("Invalid token");
     }
 });
-profileRouter.patch('/profile/edit',userauth,async(req,res)=>{
+profileRouter.patch('/profile/edit', userauth, async (req, res) => {
     try{
     
 
@@ -29,15 +32,22 @@ profileRouter.patch('/profile/edit',userauth,async(req,res)=>{
         LoggedInuser[key]=req.body[key]
     });
     await LoggedInuser.save();
-    console.log(LoggedInuser);
-    res.send("profile updated sucessFully");
+
+     console.log("✅ Profile updated successfully");
+        res.status(200).json({
+            message: "Profile updated successfully",
+            data: LoggedInuser
+        });
+
   }
   catch(err){
-       res.status(400).send("Error:"+err.message);
+        console.error("❌ Profile update error:", err);
+        res.status(400).json({
+            message: "Error updating profile",
+            error: err.message
+        });
+
   }
-  
-
-
 });
 profileRouter.patch('/profile/editPassWord',userauth,async(req,res)=>{
     try{
@@ -50,6 +60,7 @@ profileRouter.patch('/profile/editPassWord',userauth,async(req,res)=>{
     //LoggedInuser["password"]=req.body.password;
     LoggedInuser.password=await bcrypt.hash(req.body.password,10);
     await LoggedInuser.save();
+
     res.send("Password updated sucessFully");
 }
 catch(err){

@@ -3,6 +3,16 @@ const connectDB=require('./config/database');
 const app=express();
 const cookieParser = require('cookie-parser');
 const { get } = require('mongoose');
+const cors = require("cors");
+app.use(cors({
+  origin: "http://localhost:5174",
+  methods: ["GET","POST","PATCH","DELETE"],
+  credentials: true
+}));
+
+
+
+
 app.use(express.json()); // middleware to parse json body
 app.use(cookieParser()); // parse cookies for all routes
 const authRouter=require('./Routes/auth');
@@ -13,6 +23,10 @@ app.use('/',userRouter);
 app.use('/',profileRouter);
 app.use('/',authRouter);
 app.use('/',requestRouter);
+app.use((req, res) => {
+  res.status(404).send('Route not found');
+});
+
 connectDB()
 .then(()=>{
     console.log("DB connected");
@@ -24,3 +38,4 @@ connectDB()
 .catch((err)=>{
     console.log("DB connection failed",err);
 });
+

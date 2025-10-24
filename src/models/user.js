@@ -33,6 +33,7 @@ const userSchema=new mongoose.Schema({
     age:{
       type:Number,
       min:18,
+      default:18,
 
     },
     gender:{
@@ -42,6 +43,7 @@ const userSchema=new mongoose.Schema({
             throw new Error("Invalid gender");
         }
       },
+      default:"other",
     },
     about:{
       type:String,
@@ -53,7 +55,7 @@ const userSchema=new mongoose.Schema({
     },
     profileImage:{
       type:String,
-      default:"https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-260nw-1725655669.jpg",
+      default:"https://www.vecteezy.com/vector-art/25869648-monochrome-woman-avatar-silhouette-user-icon-vector-in-trendy-flat-design",
     }
 },{timestamps:true});
 userSchema.methods.getJWTToken=function(){
