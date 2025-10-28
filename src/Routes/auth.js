@@ -21,10 +21,11 @@ authRouter.post('/login',async(req,res)=>{
         else{
             //creating  a token
             const token= await user.getJWTToken();
-            //storing the token in browsers cookie
+            //storing the token in cookie
             res.cookie('token',token,{expires:new Date(Date.now()+604800000)}); //7 days
-            res.send(user);
+            res.send("Login successful");
         }
+
     }
     catch(err){
         res.status(401).send(err.message);
@@ -45,24 +46,13 @@ authRouter.post('/signup',async(req,res)=>{
             email,
             password:passwordHash
     });
-         const savedUser = await user.save();
-         const token= await savedUser.getJWTToken();
-            //storing the token in browsers cookie
-            res.cookie('token',token,{expires:new Date(Date.now()+604800000)}); //7 days
-            res.json({message:"User added to db sucessfully",data:savedUser});
- }
+         await user.save();
+        res.send("user added to db sucessfully")
+    }
     catch(err){
         return res.status(400).send(err.message);
     }
         
     
-});
-authRouter.post('/logout',async(req,res)=>{
-    //logout only possible when you login
-    res.cookie("token",null,{
-        expires:new Date(Date.now()),
-    });
-    res.send("logout sucessFully");
-
 });
 module.exports=authRouter;
