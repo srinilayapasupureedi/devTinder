@@ -4,15 +4,12 @@ const app=express();
 const cookieParser = require('cookie-parser');
 const { get } = require('mongoose');
 const cors = require("cors");
-app.use(cors({
-  origin: "http://localhost:5174",
-  methods: ["GET","POST","PATCH","DELETE"],
-  credentials: true
-}));
-
-
-
-
+app.use(
+  cors({
+    origin: "http://localhost:5173", // 👈 Must match your React dev server
+    credentials: true, // 👈 Enables cookies/session auth
+  })
+);
 app.use(express.json()); // middleware to parse json body
 app.use(cookieParser()); // parse cookies for all routes
 const authRouter=require('./Routes/auth');

@@ -55,7 +55,7 @@ const userSchema=new mongoose.Schema({
     },
     profileImage:{
       type:String,
-      default:"https://www.vecteezy.com/vector-art/25869648-monochrome-woman-avatar-silhouette-user-icon-vector-in-trendy-flat-design",
+      default:"https://i.pinimg.com/originals/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg",
     }
 },{timestamps:true});
 userSchema.methods.getJWTToken=function(){
