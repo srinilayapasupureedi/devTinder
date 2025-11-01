@@ -16,35 +16,35 @@ profileRouter.get('/profile',userauth,async(req,res)=>{
 module.exports = profileRouter;
 
 
-// profileRouter.get("/profile/view", userauth, async (req, res) => {
-//   try {
-//     const user = req.user;
+profileRouter.get("/profile/view", userauth, async (req, res) => {
+  try {
+    const user = req.user;
 
-//     res.send(user);
-//   } catch (err) {
-//     res.status(400).send("ERROR : " + err.message);
-//   }
-// });
+    res.send(user);
+  } catch (err) {
+    res.status(400).send("ERROR : " + err.message);
+  }
+});
 
-// profileRouter.patch("/profile/edit", useruth, async (req, res) => {
-//   try {
-//     if (!validateEditProfileData(req)) {
-//       throw new Error("Invalid Edit Request");
-//     }
+profileRouter.patch("/profile/edit", useruth, async (req, res) => {
+  try {
+    if (!validateEditProfileData(req)) {
+      throw new Error("Invalid Edit Request");
+    }
 
-//     const loggedInUser = req.user;
+    const loggedInUser = req.user;
 
-//     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
+    Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
 
-//     await loggedInUser.save();
+    await loggedInUser.save();
 
-//     res.json({
-//       message: `${loggedInUser.firstName}, your profile updated successfuly`,
-//       data: loggedInUser,
-//     });
-//   } catch (err) {
-//     res.status(400).send("ERROR : " + err.message);
-//   }
-// });
+    res.json({
+      message: `${loggedInUser.firstName}, your profile updated successfuly`,
+      data: loggedInUser,
+    });
+  } catch (err) {
+    res.status(400).send("ERROR : " + err.message);
+  }
+});
 
 module.exports = profileRouter;
