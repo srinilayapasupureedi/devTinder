@@ -16,10 +16,10 @@ const authRouter=require('./Routes/auth');
 const profileRouter=require('./Routes/profile');
 const userRouter=require('./Routes/user');
 const requestRouter=require('./Routes/request');
-app.use('/api',userRouter);
-app.use('/api',profileRouter);
-app.use('/api',authRouter);
-app.use('/api',requestRouter);
+app.use('/',userRouter);
+app.use('/',profileRouter);
+app.use('/',authRouter);
+app.use('/',requestRouter);
 app.use((req, res) => {
   res.status(404).send('Route not found');
 });
