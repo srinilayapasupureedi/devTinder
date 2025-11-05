@@ -49,24 +49,24 @@ profileRouter.patch('/profile/edit', userauth, async (req, res) => {
 
   }
 });
-profileRouter.patch('/profile/editPassWord',userauth,async(req,res)=>{
-    try{
-        console.log("PATCH body:", req.body);
-    if(!validateEditPassWord(req))
-    {
-     throw new  Error("Invalid edit request");
-    }
-    const LoggedInuser=req.user;
-    //LoggedInuser["password"]=req.body.password;
-    LoggedInuser.password=await bcrypt.hash(req.body.password,10);
-    await LoggedInuser.save();
+// profileRouter.patch('/profile/editPassWord',userauth,async(req,res)=>{
+//     try{
+//         console.log("PATCH body:", req.body);
+//     if(!validateEditPassWord(req))
+//     {
+//      throw new  Error("Invalid edit request");
+//     }
+//     const LoggedInuser=req.user;
+//     //LoggedInuser["password"]=req.body.password;
+//     LoggedInuser.password=await bcrypt.hash(req.body.password,10);
+//     await LoggedInuser.save();
 
-    res.send("Password updated sucessFully");
-}
-catch(err){
-    res.status(400).send("Error:"+err.message);
-}
+//     res.send("Password updated sucessFully");
+// }
+// catch(err){
+//     res.status(400).send("Error:"+err.message);
+// }
 
-});
+// });
 
 module.exports = profileRouter;
