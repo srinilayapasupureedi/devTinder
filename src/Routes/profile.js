@@ -3,9 +3,6 @@ const {userauth}=require('../middleWare/auth');
 const bcrypt = require('bcrypt');
 const {validateEditProfileData,validateEditPassWord}=require('../utilis/validate');
 const profileRouter=express.Router();
-
-
-
 profileRouter.get('/profile/view',userauth,async(req,res)=>{
     try{
         const user=req.user;
