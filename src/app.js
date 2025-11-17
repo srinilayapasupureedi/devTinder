@@ -6,7 +6,7 @@ const { get } = require('mongoose');
 const cors = require("cors");
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://13.50.56.83/"], // 👈 Must match your React dev server
+    origin: ["http://localhost:5173", "http://13.50.56.83"], // 👈 Must match your React dev server
     credentials: true, // 👈 Enables cookies/session auth
   })
 );
